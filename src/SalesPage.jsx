@@ -2,6 +2,41 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
 import './SalesPage.css';
 
+export const VTurbPlayer = ({ videoId }) => {
+  const containerId = `vturb-container-${videoId}`;
+  
+  useEffect(() => {
+    // 1. Remove scripts antigos para evitar conflitos de ID
+    const oldScript = document.getElementById(`vturb-script-${videoId}`);
+    if (oldScript) oldScript.remove();
+
+    // 2. Cria o novo script
+    const s = document.createElement("script");
+    s.id = `vturb-script-${videoId}`;
+    s.src = `https://scripts.converteai.net/ccc32a7d-f62b-4e19-81ee-38eb6654ebaf/players/${videoId}/v4/player.js`;
+    s.async = true;
+    
+    // Adiciona o script ao final do body para garantir que o DOM já resolveu
+    document.body.appendChild(s);
+
+    return () => {
+      // Limpeza ao desmontar o componente
+      const scriptToRemove = document.getElementById(`vturb-script-${videoId}`);
+      if (scriptToRemove) scriptToRemove.remove();
+    };
+  }, [videoId]);
+
+  return (
+    <div 
+      id={containerId}
+      style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      dangerouslySetInnerHTML={{ 
+        __html: `<vturb-smartplayer id="vid-${videoId}" style="display:block;margin:0 auto;width:100%;max-width:100%;height:100%;"></vturb-smartplayer>` 
+      }}
+    />
+  );
+};
+
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -108,13 +143,21 @@ const SalesPage = () => {
           A Dra Ana Vilella criou um protocolo personalizado para combater essa causa raiz das suas manchas de forma natural.
         </h1>
 
+        <img 
+          src="/images/dr ana vilella derma.png" 
+          alt="Dra. Ana Vilella" 
+          loading="lazy"
+          decoding="async"
+          style={{ width: '100%', display: 'block', borderRadius: '12px', marginBottom: '2rem', boxShadow: 'var(--shadow-sm)' }} 
+        />
+
+        <div className="sales-hero" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', marginBottom: '2rem', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', aspectRatio: '9/16', width: '100%', maxWidth: '400px', margin: '0 auto 2rem auto' }}>
+          <VTurbPlayer videoId="69d574d195a1d0cd29f986b9" />
+        </div>
+
         <h2 style={{ fontSize: '1.25rem', fontWeight: 800, textAlign: 'center', marginBottom: '1rem', color: '#111827' }}>
           Tudo que você vai receber 👇
         </h2>
-
-        <div className="sales-hero" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', marginBottom: '2rem', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', aspectRatio: '16/9' }}>
-          <vturb-smartplayer id="vid-69d574d195a1d0cd29f986b9" style={{ display: 'block', margin: '0 auto', width: '100%', maxWidth: '100%', height: '100%' }}></vturb-smartplayer>
-        </div>
 
         <div className="timeline-list">
           <div className="timeline-item">
@@ -302,13 +345,7 @@ const SalesPage = () => {
           </p>
         </div>
 
-        <img 
-          src="/images/dr ana vilella derma.png" 
-          alt="Dra. Ana Vilella" 
-          loading="lazy"
-          decoding="async"
-          style={{ width: '100%', display: 'block', borderRadius: '12px', marginBottom: '2rem', boxShadow: 'var(--shadow-sm)' }} 
-        />
+
 
       </div>
     </div>

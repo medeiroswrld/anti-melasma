@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Play, Pause, BadgeCheck, CheckSquare, Square, Star } from 'lucide-react';
 import './index.css';
-import SalesPage from './SalesPage';
+import SalesPage, { VTurbPlayer } from './SalesPage';
 
 const STEPS = [
   { id: 'home', type: 'info' },
@@ -291,9 +291,9 @@ function App() {
               boxShadow: 'var(--shadow-sm)'
             }}>
               <div style={{ display: 'flex', marginRight: '0.75rem', flexShrink: 0 }}>
-                <img src="/images/Captura de tela 2026-01-18 184112.png" alt="Mulher 1" style={{ width: '45px', height: '45px', borderRadius: '50%', border: '2px solid white', objectFit: 'cover', zIndex: 3 }} />
-                <img src="/images/Captura de tela 2026-01-18 184127.png" alt="Mulher 2" style={{ width: '45px', height: '45px', borderRadius: '50%', border: '2px solid white', objectFit: 'cover', marginLeft: '-15px', zIndex: 2 }} />
-                <img src="/images/Captura de tela 2026-01-18 184211.png" alt="Mulher 3" style={{ width: '45px', height: '45px', borderRadius: '50%', border: '2px solid white', objectFit: 'cover', marginLeft: '-15px', zIndex: 1 }} />
+                <img src="/images/Captura de tela 2026-01-18 184112.png" alt="Mulher 1" loading="lazy" decoding="async" style={{ width: '45px', height: '45px', borderRadius: '50%', border: '2px solid white', objectFit: 'cover', zIndex: 3 }} />
+                <img src="/images/Captura de tela 2026-01-18 184127.png" alt="Mulher 2" loading="lazy" decoding="async" style={{ width: '45px', height: '45px', borderRadius: '50%', border: '2px solid white', objectFit: 'cover', marginLeft: '-15px', zIndex: 2 }} />
+                <img src="/images/Captura de tela 2026-01-18 184211.png" alt="Mulher 3" loading="lazy" decoding="async" style={{ width: '45px', height: '45px', borderRadius: '50%', border: '2px solid white', objectFit: 'cover', marginLeft: '-15px', zIndex: 1 }} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#111827' }}>+12.500 diagnósticos realizados</div>
@@ -381,13 +381,14 @@ function App() {
               Ouça a mensagem da Dra Ana Vilella para você:
             </h2>
             
-            <VideoPlayer src="/copy.mp4.mp4" onReadyToContinue={() => setCanContinueT1(true)} />
+            <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto 2rem auto', aspectRatio: '9/16', borderRadius: '12px', overflow: 'hidden', backgroundColor: '#000', boxShadow: 'var(--shadow-md)' }}>
+               <VTurbPlayer videoId="69d574d195a1d0cd29f986b9" />
+               <p style={{ textAlign: 'center', color: '#666', fontSize: '0.8rem', marginTop: '0.5rem', background: '#fff' }}>(Assista até o final para liberar o botão)</p>
+            </div>
 
-            {canContinueT1 && (
-              <button className="btn-secondary fade-in" onClick={goToNextStep} style={{ marginTop: '0' }}>
+            <button className="btn-secondary fade-in" onClick={goToNextStep} style={{ marginTop: '1rem' }}>
                 Continuar meu diagnóstico <ArrowRight size={20} />
-              </button>
-            )}
+            </button>
           </div>
         </div>
       );
