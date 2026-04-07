@@ -46,6 +46,8 @@ const TestimonialCarousel = () => {
         <img 
           src={current.src} 
           alt={`Antes e Depois ${currentIndex}`} 
+          loading="lazy"
+          decoding="async"
           style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
         />
       )}
@@ -110,8 +112,8 @@ const SalesPage = () => {
           Tudo que você vai receber 👇
         </h2>
 
-        <div className="sales-hero" style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', background: '#d1d5db', marginBottom: '2rem', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-          <img src="/images/começo pg.png" alt="Especialista" style={{ width: '100%', display: 'block', height: 'auto', zIndex: 1 }} />
+        <div className="sales-hero" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', marginBottom: '2rem', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', aspectRatio: '16/9' }}>
+          <vturb-smartplayer id="vid-69d574d195a1d0cd29f986b9" style={{ display: 'block', margin: '0 auto', width: '100%', maxWidth: '100%', height: '100%' }}></vturb-smartplayer>
         </div>
 
         <div className="timeline-list">
@@ -183,6 +185,8 @@ const SalesPage = () => {
         <img 
           src="/images/garantia de 30 d copy.png" 
           alt="Garantia de 30 dias" 
+          loading="lazy"
+          decoding="async"
           style={{ width: '100%', display: 'block', margin: '0 auto 2rem auto', borderRadius: '12px', boxShadow: 'var(--shadow-sm)' }} 
         />
 
@@ -301,6 +305,8 @@ const SalesPage = () => {
         <img 
           src="/images/dr ana vilella derma.png" 
           alt="Dra. Ana Vilella" 
+          loading="lazy"
+          decoding="async"
           style={{ width: '100%', display: 'block', borderRadius: '12px', marginBottom: '2rem', boxShadow: 'var(--shadow-sm)' }} 
         />
 
