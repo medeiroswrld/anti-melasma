@@ -29,7 +29,15 @@ export const VTurbPlayer = ({ videoId }) => {
   return (
     <div 
       id={containerId}
-      style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      style={{ 
+        width: '100%', 
+        height: '100%', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        background: 'url("/images/dr ana vilella derma.png") center center / cover no-repeat',
+        backgroundColor: '#000'
+      }}
       dangerouslySetInnerHTML={{ 
         __html: `<vturb-smartplayer id="vid-${videoId}" style="display:block;margin:0 auto;width:100%;max-width:100%;height:100%;"></vturb-smartplayer>` 
       }}
