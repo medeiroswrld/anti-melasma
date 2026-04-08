@@ -32,14 +32,17 @@ export const VTurbPlayer = ({ videoId }) => {
       style={{ 
         width: '100%', 
         height: '100%', 
+        minHeight: '200px', // Garante que o container não colapse
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'center',
         background: 'url("/images/dr ana vilella derma.png") center center / cover no-repeat',
-        backgroundColor: '#000'
+        backgroundColor: '#000',
+        borderRadius: '12px',
+        overflow: 'hidden'
       }}
       dangerouslySetInnerHTML={{ 
-        __html: `<vturb-smartplayer id="vid-${videoId}" style="display:block;margin:0 auto;width:100%;max-width:100%;height:100%;"></vturb-smartplayer>` 
+        __html: `<vturb-smartplayer id="vid-${videoId}" style="display:block;margin:0 auto;width:100% !important;max-width:100% !important;height:100% !important;"></vturb-smartplayer>` 
       }}
     />
   );
@@ -83,7 +86,9 @@ const TestimonialCarousel = () => {
           muted 
           loop 
           playsInline
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          webkit-playsinline="true"
+          preload="auto"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }} 
         />
       ) : (
         <img 

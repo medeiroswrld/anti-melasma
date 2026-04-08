@@ -167,6 +167,35 @@ function App() {
   const [leadPhone, setLeadPhone] = useState("");
   const [canContinueT1, setCanContinueT1] = useState(false);
 
+  // Preloading de imagens do quiz para performance máxima
+  useEffect(() => {
+    const allImages = [
+      '/dr ana vilella derma.png',
+      '/images/testa.png',
+      '/images/bochechas.png',
+      '/images/buço.png',
+      '/images/rosto todo.png',
+      '/images/gravidez.png',
+      '/images/menopausa.png',
+      '/images/estresse.png',
+      '/images/nao-sei.png',
+      '/images/leve.png',
+      '/images/media.png',
+      '/images/forte.png',
+      '/images/garantia de 30 d copy.png',
+      '/images/antes e depois melasma 1.jpg',
+      '/images/antes e depois melasma 2.jpg',
+      '/images/antes e depois melasma 3.jpg',
+      '/images/antes e depois melasma 4.jpg',
+      '/images/antes e depois melasma 5.jpg'
+    ];
+    
+    allImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   const currentStep = STEPS[currentStepIndex];
   
   useEffect(() => {
