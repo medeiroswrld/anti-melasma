@@ -36,8 +36,7 @@ export const VTurbPlayer = ({ videoId }) => {
         display: 'flex', 
         alignItems: 'center', 
         justifyContent: 'center',
-        background: 'url("/images/dr ana vilella derma.png") center center / cover no-repeat',
-        backgroundColor: '#000',
+        background: '#000',
         borderRadius: '12px',
         overflow: 'hidden'
       }}
@@ -157,8 +156,8 @@ const SalesPage = () => {
         </h1>
 
         <img 
-          src="/images/dr ana vilella derma.png" 
-          alt="Dra. Ana Vilella" 
+          src="/images/começo pg.png" 
+          alt="Início do Diagnóstico" 
           loading="lazy"
           decoding="async"
           style={{ width: '100%', display: 'block', borderRadius: '12px', marginBottom: '2rem', boxShadow: 'var(--shadow-sm)' }} 
