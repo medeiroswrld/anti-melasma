@@ -155,6 +155,10 @@ const SalesPage = () => {
           A Dra Ana Vilella criou um protocolo personalizado para combater essa causa raiz das suas manchas de forma natural.
         </h1>
 
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 800, textAlign: 'center', marginBottom: '1rem', color: '#111827' }}>
+          Tudo que você vai receber 👇
+        </h2>
+
         <img 
           src="/images/começo pg.png" 
           alt="Início do Diagnóstico" 
@@ -162,14 +166,6 @@ const SalesPage = () => {
           decoding="async"
           style={{ width: '100%', display: 'block', borderRadius: '12px', marginBottom: '2rem', boxShadow: 'var(--shadow-sm)' }} 
         />
-
-        <div className="sales-hero" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', marginBottom: '2rem', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', aspectRatio: '9/16', width: '100%', maxWidth: '400px', margin: '0 auto 2rem auto' }}>
-          <VTurbPlayer videoId="69d574d195a1d0cd29f986b9" />
-        </div>
-
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 800, textAlign: 'center', marginBottom: '1rem', color: '#111827' }}>
-          Tudo que você vai receber 👇
-        </h2>
 
         <div className="timeline-list">
           <div className="timeline-item">
@@ -314,6 +310,14 @@ const SalesPage = () => {
             </div>
           </div>
         </div>
+
+        <img 
+          src="/images/dr ana vilella derma.png" 
+          alt="Dra Ana Vilella Dermatologista" 
+          loading="lazy"
+          decoding="async"
+          style={{ width: '100%', display: 'block', borderRadius: '12px', margin: '2rem auto', boxShadow: 'var(--shadow-sm)' }} 
+        />
 
         <div style={{ marginBottom: '2rem' }}>
           <FAQItem 

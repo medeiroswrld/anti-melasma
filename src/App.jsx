@@ -167,33 +167,44 @@ function App() {
   const [leadPhone, setLeadPhone] = useState("");
   const [canContinueT1, setCanContinueT1] = useState(false);
 
-  // Preloading de imagens do quiz para performance máxima
+  // Preloading de imagens do quiz para performance máxima e sem travar a thread
   useEffect(() => {
-    const allImages = [
-      '/dr ana vilella derma.png',
-      '/images/testa.png',
-      '/images/bochechas.png',
-      '/images/buço.png',
-      '/images/rosto todo.png',
-      '/images/gravidez.png',
-      '/images/menopausa.png',
-      '/images/estresse.png',
-      '/images/nao-sei.png',
-      '/images/leve.png',
-      '/images/media.png',
-      '/images/forte.png',
-      '/images/garantia de 30 d copy.png',
-      '/images/antes e depois melasma 1.jpg',
-      '/images/antes e depois melasma 2.jpg',
-      '/images/antes e depois melasma 3.jpg',
-      '/images/antes e depois melasma 4.jpg',
-      '/images/antes e depois melasma 5.jpg'
-    ];
-    
-    allImages.forEach(src => {
-      const img = new Image();
-      img.src = src;
-    });
+    const preloadImages = () => {
+      const allImages = [
+        '/images/primeira img.png',
+        '/images/começo pg.png',
+        '/images/dr ana vilella derma.png',
+        '/images/testa.png',
+        '/images/bochechas.png',
+        '/images/buço.png',
+        '/images/rosto todo.png',
+        '/images/gravidez.png',
+        '/images/menopausa.png',
+        '/images/estresse.png',
+        '/images/nao-sei.png',
+        '/images/leve.png',
+        '/images/media.png',
+        '/images/forte.png',
+        '/images/garantia de 30 d copy.png',
+        '/images/img cha.png',
+        '/images/antes e depois melasma 1.jpg',
+        '/images/antes e depois melasma 2.jpg',
+        '/images/antes e depois melasma 3.jpg',
+        '/images/antes e depois melasma 4.jpg',
+        '/images/antes e depois melasma 5.jpg'
+      ];
+      
+      allImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    };
+
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(preloadImages);
+    } else {
+      setTimeout(preloadImages, 1000);
+    }
   }, []);
 
   const currentStep = STEPS[currentStepIndex];
@@ -216,7 +227,7 @@ function App() {
       setTimeout(() => {
         setCurrentStepIndex(currentStepIndex + 1);
         setIsTransitioning(false);
-      }, 300);
+      }, 150); // Velocidade de transição mais responsiva
     }
   };
 
@@ -226,7 +237,7 @@ function App() {
       setTimeout(() => {
         setCurrentStepIndex(currentStepIndex - 1);
         setIsTransitioning(false);
-      }, 300);
+      }, 150);
     }
   };
 
@@ -251,7 +262,7 @@ function App() {
     setTimeout(() => {
       setSelectedOption(null);
       goToNextStep();
-    }, 400);
+    }, 200); // Resposta rápida ao clique
   };
 
   const handleFinalSubmit = () => {
@@ -577,7 +588,8 @@ function App() {
         display: 'flex', 
         flexDirection: 'column', 
         opacity: isTransitioning ? 0 : 1, 
-        transition: 'opacity 0.2s ease-out',
+        transition: 'opacity 0.15s ease-out',
+        willChange: 'opacity',
         paddingTop: currentStep.id === 'sales-page' ? '0' : (currentStepIndex > 0 && currentStepIndex < STEPS.length - 1 ? '0' : '20px'),
         overflowX: 'hidden',
         width: '100%',

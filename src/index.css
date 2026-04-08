@@ -60,10 +60,12 @@ body {
 /* Utilities */
 .fade-in {
   animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: opacity, transform;
 }
 
 .slide-in {
   animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: opacity, transform;
 }
 
 /* Progress Bar */
