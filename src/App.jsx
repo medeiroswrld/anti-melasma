@@ -3,6 +3,32 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Play, Pause, BadgeCheck, CheckSqua
 import './index.css';
 import SalesPage, { VTurbPlayer } from './SalesPage';
 
+// ── Tracking helpers ──────────────────────────────────────
+const trackEvent = (eventName, params = {}) => {
+  // Google Ads / gtag
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', eventName, params);
+  }
+  // UTMify pixel custom events
+  if (typeof window.utmify === 'function') {
+    try { window.utmify('track', eventName, params); } catch(e) {}
+  }
+  // Debug log in dev
+  if (import.meta.env.DEV) {
+    console.log(`[TRACK] ${eventName}`, params);
+  }
+};
+
+const trackPageView = (stepId) => {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'page_view', {
+      page_title: `Funil - ${stepId}`,
+      page_location: `${window.location.origin}/#${stepId}`,
+      page_path: `/#${stepId}`
+    });
+  }
+};
+
 const STEPS = [
   { id: 'home', type: 'info' },
   { id: 'q1', type: 'question', progress: 6 },
@@ -212,8 +238,38 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
 
+    const stepId = STEPS[currentStepIndex].id;
+
+    // ── Fire page_view for every step ──
+    trackPageView(stepId);
+
+    // ── Funnel-specific events ──
+    if (stepId === 'q1') {
+      // User started the quiz (first question)
+      trackEvent('quiz_start', { event_category: 'funnel', step: 'q1' });
+    }
+    if (stepId === 'diagnostic') {
+      // User completed the quiz
+      trackEvent('quiz_complete', { event_category: 'funnel', step: 'diagnostic' });
+    }
+    if (stepId === 'loading_protocol') {
+      // User is about to see the offer
+      trackEvent('view_protocol_loading', { event_category: 'funnel', step: 'loading_protocol' });
+    }
+    if (stepId === 'sales-page') {
+      // User arrived at the sales page — ViewContent
+      trackEvent('view_content', {
+        event_category: 'funnel',
+        step: 'sales-page',
+        content_type: 'product',
+        content_name: 'Protocolo Anti-Melasma',
+        value: 37.90,
+        currency: 'BRL'
+      });
+    }
+
     let timer;
-    if (STEPS[currentStepIndex].id === 'loading_protocol') {
+    if (stepId === 'loading_protocol') {
       timer = setTimeout(() => {
         goToNextStep();
       }, 5000);

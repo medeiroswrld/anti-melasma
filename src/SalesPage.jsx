@@ -2,6 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
 import './SalesPage.css';
 
+// ── Tracking helper (shared) ──────────────────────────────
+const trackSalesEvent = (eventName, params = {}) => {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', eventName, params);
+  }
+  if (typeof window.utmify === 'function') {
+    try { window.utmify('track', eventName, params); } catch(e) {}
+  }
+  if (import.meta.env.DEV) {
+    console.log(`[TRACK-SALES] ${eventName}`, params);
+  }
+};
+
 export const VTurbPlayer = ({ videoId }) => {
   const containerId = `vturb-container-${videoId}`;
   
@@ -136,10 +149,27 @@ const SalesPage = () => {
   };
 
   const handleCheckout = () => {
-    window.location.href = 'https://pay.wiapy.com/V73shbXRtn'; 
+    const checkoutUrl = 'https://pay.wiapy.com/V73shbXRtn';
+
+    // 1. Track InitiateCheckout via gtag
+    trackSalesEvent('initiate_checkout', {
+      event_category: 'funnel',
+      content_name: 'Protocolo Anti-Melasma',
+      value: 37.90,
+      currency: 'BRL'
+    });
+
+    // 2. Fire Google Ads conversion event and redirect
+    if (typeof window.gtag_report_conversion === 'function') {
+      window.gtag_report_conversion(checkoutUrl);
+    } else {
+      window.location.href = checkoutUrl;
+    }
   };
 
   const scrollToOffer = () => {
+    // Track scroll-to-offer intent
+    trackSalesEvent('scroll_to_offer', { event_category: 'engagement' });
     document.getElementById('oferta-principal')?.scrollIntoView({ behavior: 'smooth' });
   };
 
