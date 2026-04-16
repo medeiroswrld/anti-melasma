@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Star, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
 import './SalesPage.css';
 
@@ -83,25 +83,45 @@ const carouselItems = [
 
 const TestimonialCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const videoRef = useRef(null);
 
   const next = () => setCurrentIndex((prev) => (prev === carouselItems.length - 1 ? 0 : prev + 1));
   const prev = () => setCurrentIndex((prev) => (prev === 0 ? carouselItems.length - 1 : prev - 1));
 
   const current = carouselItems[currentIndex];
 
+  // Force play video when it becomes the active slide
+  useEffect(() => {
+    if (current.type === 'video' && videoRef.current) {
+      videoRef.current.load();
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay blocked — muted retry
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current.play().catch(() => {});
+          }
+        });
+      }
+    }
+  }, [currentIndex]);
+
   return (
     <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', background: '#000', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}>
       {current.type === 'video' ? (
         <video 
-          src={current.src} 
+          key={`video-${currentIndex}`}
+          ref={videoRef}
           autoPlay 
           muted 
           loop 
           playsInline
-          webkit-playsinline="true"
           preload="auto"
           style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }} 
-        />
+        >
+          <source src={current.src} type="video/mp4" />
+        </video>
       ) : (
         <img 
           src={current.src} 
